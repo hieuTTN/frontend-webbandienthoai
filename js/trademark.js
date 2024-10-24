@@ -25,3 +25,19 @@ async function loadAllTrademarkMenuLeft(){
     }
     document.getElementById("danhmucleft").innerHTML = main;
 }
+
+async function loadTrademarkCheckBox(){
+    var url = 'http://localhost:8080/api/trademark/public/find-quantity';
+    const res = await fetch(url, {});
+    var list = await res.json();
+    var main = ''
+    for (i = 0; i < list.length; i++) {
+        main += `<div class="singlelistmenu">
+                    <label class="checkbox-custom cateparent">${list[i].name}</i>
+                        <input name="trademarkIds" value="${list[i].id}" type="checkbox">
+                        <span class="checkmark-checkbox"></span>
+                    </label>
+                </div>`
+    }
+    document.getElementById("listthuonghieu").innerHTML = main;
+}

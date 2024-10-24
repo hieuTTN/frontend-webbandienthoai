@@ -1,6 +1,6 @@
-var sizeblog = 9;
+var sizeblog = 8;
 async function loadBlogIndex() {
-    var url = 'http://localhost:8080/api/blog/public/findAll?page=0&size=' + sizeblog + '&sort=id,desc';
+    var url = 'http://localhost:8080/api/blog/public/findAll?page=0&size=' + 8 + '&sort=id,desc';
     const response = await fetch(url, {
         method: 'GET'
     });
@@ -8,12 +8,18 @@ async function loadBlogIndex() {
     var list = result.content;
     var main = '';
     for (i = 0; i < list.length; i++) {
-        main += ` <div class="singleblogindex">
-        <a href="chitietbaiviet?id=${list[i].id}">${list[i].title}</a>
-    </div>`
+        main += `<div class="col-sm-3">
+                    <div class="singleblogindex">
+                        <a href="chitietbaiviet.html?id=${list[i].id}">
+                            <img src="${list[i].imageBanner}">
+                            <div class="divsingleblogindex">
+                                <span>${list[i].title}</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>`
     }
     document.getElementById("listblogindex").innerHTML = main
-    loadPrimaryBlogIndex();
 }
 
 
@@ -29,11 +35,11 @@ async function loadBlogList(page) {
     for (i = 0; i < list.length; i++) {
         main += `<div class="singlebv row">
         <div class="col-lg-3 col-md-3 col-sm-6 col-6">
-            <a href="chitietbaiviet?id=${list[i].id}"><img src="${list[i].imageBanner}" class="anhdsbaiviet"></a>
+            <a href="chitietbaiviet.html?id=${list[i].id}"><img src="${list[i].imageBanner}" class="anhdsbaiviet"></a>
         </div>
         <div class="col-lg-7 col-md-7 col-sm-6 col-6">
             <div class="ctnoidungdsbv">
-                <a href="chitietbaiviet?id=${list[i].id}" class="tagas"><span class="tieudebv">${list[i].title}</span></a>
+                <a href="chitietbaiviet.html?id=${list[i].id}" class="tagas"><span class="tieudebv">${list[i].title}</span></a>
                 <span class="motabaivietds">${list[i].description}</span>
                 <div class="thongtinnguoidangbv">
                     <span class="nguoidangbv"><i class="fa fa-user"></i> ${list[i].user.fullname}</span>
@@ -64,8 +70,8 @@ async function loadPrimaryBlogIndex() {
     });
     var blog = await response.json();
     var main = 
-    `<a href="chitietbaiviet?id=${blog.id}" id="hrefimgpri"><img src="${blog.imageBanner}" id="blogpriimage" class="blogpriimage"></a>
-    <a href="chitietbaiviet?id=${blog.id}" class="titlepriindex" id="titlepriindex">${blog.title}</a>`
+    `<a href="chitietbaiviet.html?id=${blog.id}" id="hrefimgpri"><img src="${blog.imageBanner}" id="blogpriimage" class="blogpriimage"></a>
+    <a href="chitietbaiviet.html?id=${blog.id}" class="titlepriindex" id="titlepriindex">${blog.title}</a>`
     document.getElementById("blogpridiv").innerHTML = main
 }
 
@@ -83,7 +89,7 @@ async function loadPrimaryBlogBv() {
         <span class="ngaydangbvchinh"><i class="fa fa-clock"></i> ${blog.createdDate}</span>
     </div>`
     document.getElementById("baivietmoinhat").innerHTML = main
-    document.getElementById("baivietmoinhat").onclick = function(){window.location.href = 'chitietbaiviet?id='+blog.id}
+    document.getElementById("baivietmoinhat").onclick = function(){window.location.href = 'chitietbaiviet.html?id='+blog.id}
 }
 
 async function loadABlog() {
@@ -96,8 +102,8 @@ async function loadABlog() {
         var blog = await response.json();
         document.getElementById("title").innerHTML = blog.title
         document.getElementById("noidungbaiviet").innerHTML = blog.content
-        // document.getElementById("userbldt").innerHTML = blog.user.fullname
-        // document.getElementById("ngaydang").innerHTML = blog.createdDate
+        document.getElementById("userbldt").innerHTML = blog.user.fullname
+        document.getElementById("ngaydang").innerHTML = blog.createdDate
         // document.getElementById("imgbanner").src = blog.imageBanner
     }
 }

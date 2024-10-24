@@ -23,18 +23,24 @@
     />
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="js/main.js"></script>
-    <script src="js/banner.js"></script>
-    <script src="js/product.js"></script>
-    <script src="js/blog.js"></script>
     <script src="js/trademark.js"></script>
+    <script src="js/product.js"></script>
+    <script src="js/category.js"></script>
+    <script src="js/banner.js"></script>
     <script>
         window.onload = function(){
             loadMenu();
             loadBanner();
-            loadAllTrademarkMenuLeft();
-            loadSanPhamMoiNhat(0);
-            loadSanPhamBanChay(0);
-            loadBlogIndex();
+            loadCategoryCheckBox();
+            loadTrademarkCheckBox();
+            var uls = new URL(document.URL)
+            var thuonghieu = uls.searchParams.get("thuonghieu");
+            if(thuonghieu == null){
+                locSanPham(0);
+            }
+            else{
+                sanPhamByThuongHieu(0);
+            }
         }
     </script>
 </head>
@@ -45,15 +51,6 @@
         <div class="containercustom container">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-sm-2">
-                        <div class="danhmucleft" id="danhmucleft">
-                            <span class="spdanhmucleft">
-                                <a href="product?category=${list[i].id}" class="danhmucnameleft">Tên danh mục
-                                <span class="slsanphamdanhmuc">(6)</span>
-                                </a>
-                            </span>
-                        </div>
-                    </div>
                     <div class="col-sm-7">
                         <div id="carouselExampleControls" class="carousel slide bannerindex" data-bs-ride="carousel">
                             <div id="carouselindex">
@@ -68,7 +65,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-4">
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="bannerhot1 bannerrighttopindex"></div>
@@ -81,47 +78,51 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-12">
-                        <div class="bannerhot1 bannerfoo"></div>
-                    </div>
                 </div>
+                <div class="bannerhot1" style="margin-top: 10px;"></div>
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col-sm-3">
+                        <div class="chitietbaivietdiv">
+                            <div class="positionrelative">
+                                <p class="tintuctieude">Lọc sản phẩm</p>
+                                <button onclick="locSanPham(0)" class="btn-apdung">Áp dụng</button>
+                            </div>
+                            <hr>
+                            <label class="lb-chon-danhmuc">Chọn khoảng giá</label>
+                            <select class="form-control selectfocus" id="khoanggia">
+                                <option value="0-100000000">Tất cả khoảng giá</option>
+                                <option value="0-999999">Dưới 1 triệu</option>
+                                <option value="1000000-2000000">Từ 1-2 triệu</option>
+                                <option value="2000000-4000000">Từ 2-4 triệu</option>
+                                <option value="4000000-6000000">Từ 4-6 triệu</option>
+                                <option value="6000000-9000000">Từ 6-9 triệu</option>
+                                <option value="9000000-12000000">Từ 9-12 triệu</option>
+                                <option value="12000000-18000000">Từ 12-18 triệu</option>
+                                <option value="18000000-180000000">Trên 18 triệu</option>
+                            </select>
+                            <label class="lb-chon-danhmuc">Sắp xếp theo</label>
+                            <select class="form-control selectfocus" id="sortpro">
+                                <option value="id,asc">Mới nhất</option>
+                                <option value="price,asc">Rẻ nhất</option>
+                                <option value="price,desc">Giá giảm dần</option>
+                                <option value="quantitySold,desc">Mua nhiều nhất</option>
+                            </select>
+                            <label class="lb-chon-danhmuc">Chọn danh mục</label>
+                            <div class="listsearchCategory" id="listsearchCategory">
+                            </div>
+                            <label class="lb-chon-danhmuc">Chọn thương hiệu</label>
+                            <div class="listsearchCategory" id="listthuonghieu">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="row" id="sanphamloc">
 
-                <div class="sectionmain cat_item_store cat_special">
-                    <div class="cat-title">
-                        <h2 class="cat-title-main" id="cat-xiaomi">
-                            <a title="Xiaomi" id="link-xiaomi">
-                                <span class="icon_cat_menu"><img src="image/newitem.jpg" class="newitem"></span>
-                                Điện thoại mới  
-                            </a>
-                        </h2>
-                    </div>
-                    <div id="sanphammoinhat" class="listproduct row"></div>
-                    <div class="xemtatca">
-                        <button id="btnsanphammoi" class="xemtatcabtn">Xem thêm <i class="fa fa-chevron-down"></i></button>
-                    </div>
-
-                    <div class="cat-title">
-                        <h2 class="cat-title-main" id="cat-xiaomi">
-                            <a title="Xiaomi" id="link-xiaomi">
-                                <span class="icon_cat_menu"><img src="image/newitem.jpg" class="newitem"></span>
-                                Điện thoại bán chạy  
-                            </a>
-                        </h2>
-                    </div>
-                    <div id="sanphambanchay" class="listproduct row"></div>
-                    <div class="xemtatca">
-                        <button id="btnsanphambanchay" class="xemtatcabtn">Xem thêm <i class="fa fa-chevron-down"></i></button>
-                    </div>
-
-                    <div class="cat-title">
-                        <h2 class="cat-title-main" id="cat-xiaomi">
-                            <a title="Xiaomi" id="link-xiaomi">
-                                <span class="icon_cat_menu"><img src="image/icon_star.png" class="iconstar"></span>
-                                Tin tức  
-                            </a>
-                        </h2>
-                    </div>
-                    <div class="row listblogindex" id="listblogindex">
+                        </div>
+                        <nav aria-label="Page navigation example" style="margin-top: 30px;">
+                            <ul class="pagination" id="pageable">
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>

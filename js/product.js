@@ -1,4 +1,4 @@
-var size = 5;
+var size = 10;
 
 async function loadSanPhamBanChay(page) {
     var url = 'http://localhost:8080/api/product/public/best-saler?page=' + page + '&size=' + size+'&sort=quantitySold,desc';
@@ -10,9 +10,9 @@ async function loadSanPhamBanChay(page) {
     for (i = 0; i < list.length; i++) {
         main += `<div class="col-lg-20p col-md-3 col-sm-6 col-6">
         <div class="singleproduct">
-            <a href="detail?id=${list[i].id}"><img src="${list[i].imageBanner}" class="productimg"></a>
+            <a href="detail.html?id=${list[i].id}"><img src="${list[i].imageBanner}" class="productimg"></a>
             <div class="contentsinglepro">
-                <p class="productname"><a class="productname" href="detail?id=${list[i].id}">${list[i].name}</a></p>
+                <p class="productname"><a class="productname" href="detail.html?id=${list[i].id}">${list[i].name}</a></p>
                 <div class="priceproduct">
                     <strong class="newprice">${formatmoney(list[i].price)}</strong>
                     <span class="oldprice">${list[i].oldPrice!=null && list[i].oldPrice > 0?formatmoney(list[i].oldPrice):''}</span>
@@ -40,13 +40,17 @@ async function loadSanPhamMoiNhat(page) {
     });
     var result = await response.json();
     var list = result.content;
+    console.log(result);
+    
     var main = '';
     for (i = 0; i < list.length; i++) {
         main += `<div class="col-lg-20p col-md-3 col-sm-6 col-6">
         <div class="singleproduct">
-            <a href="detail?id=${list[i].id}"><img src="${list[i].imageBanner}" class="productimg"></a>
+            <div class="image-container">
+                <a href="detail.html?id=${list[i].id}"><img src="${list[i].imageBanner}" class="productimg"></a>
+            </div>
             <div class="contentsinglepro">
-                <p class="productname"><a class="productname" href="detail?id=${list[i].id}">${list[i].name}</a></p>
+                <p class="productname"><a class="productname" href="detail.html?id=${list[i].id}">${list[i].name}</a></p>
                 <div class="priceproduct">
                     <strong class="newprice">${formatmoney(list[i].price)}</strong>
                     <span class="oldprice">${list[i].oldPrice!=null && list[i].oldPrice > 0?formatmoney(list[i].oldPrice):''}</span>
@@ -69,40 +73,6 @@ async function loadSanPhamMoiNhat(page) {
 }
 
 
-async function loadPhuKien(page) {
-    var url = 'http://localhost:8080/api/product/public/phu-kien?page=' + page + '&size=' + size+'&sort=id,desc';
-    const response = await fetch(url, {
-    });
-    var result = await response.json();
-    var list = result.content;
-    var main = '';
-    for (i = 0; i < list.length; i++) {
-        main += `<div class="col-lg-20p col-md-3 col-sm-6 col-6">
-        <div class="singleproduct">
-            <a href="detail?id=${list[i].id}"><img src="${list[i].imageBanner}" class="productimg"></a>
-            <div class="contentsinglepro">
-                <p class="productname"><a class="productname" href="detail?id=${list[i].id}">${list[i].name}</a></p>
-                <div class="priceproduct">
-                    <strong class="newprice">${formatmoney(list[i].price)}</strong>
-                    <span class="oldprice">${list[i].oldPrice!=null && list[i].oldPrice > 0?formatmoney(list[i].oldPrice):''}</span>
-                </div>
-            </div>
-        </div>
-    </div>`
-    }
-    document.getElementById("listphukien").innerHTML += main
-    if(result.last == false){
-        document.getElementById("btnphukien").onclick=function(){
-            loadPhuKien(Number(page) + Number(1));
-        }
-    }
-    else{
-        document.getElementById("btnphukien").onclick=function(){
-            toastr.warning("Đã hết kết quả tìm kiếm");
-        }
-    }
-}
-
 
 async function loadSanPhamNoiBat() {
     var url = 'http://localhost:8080/api/product/public/best-saler?page=0&size=4&sort=quantitySold,desc';
@@ -117,7 +87,7 @@ async function loadSanPhamNoiBat() {
             <img src="${list[i].imageBanner}" class="anhspnoibat">
         </div>
         <div class="col-sm-9 ndspnoibat">
-            <a href="detail?id=${list[i].id}" class="tenspnoibat">${list[i].name}</a>
+            <a href="detail.html?id=${list[i].id}" class="tenspnoibat">${list[i].name}</a>
             <div class="priceproductnoibat">
                 <strong class="newpricenoibat">${formatmoney(list[i].price)}</strong>
                 <span class="oldpricenoibat">${list[i].oldPrice!=null && list[i].oldPrice > 0?formatmoney(list[i].oldPrice):''}</span>
@@ -139,9 +109,9 @@ async function loadSanPhamNoiBatCart() {
     for (i = 0; i < list.length; i++) {
         main += `<div class="col-md-3 col-sm-4 col-6">
         <div class="singleproducts">
-            <a href="detail?id=${list[i].id}"><img src="${list[i].imageBanner}" class="productimg"></a>
+            <a href="detail.html?id=${list[i].id}"><img src="${list[i].imageBanner}" class="productimg"></a>
             <div class="contentsinglepro">
-                <p class="productname"><a class="productname" href="detail?id=${list[i].id}">${list[i].name}</a></p>
+                <p class="productname"><a class="productname" href="detail.html?id=${list[i].id}">${list[i].name}</a></p>
                 <div class="priceproduct">
                     <strong class="newpricelq">${formatmoney(list[i].price)}</strong>
                     <span class="oldprice">${list[i].oldPrice!=null && list[i].oldPrice > 0?formatmoney(list[i].oldPrice):''}</span>
@@ -161,6 +131,8 @@ async function loadAProduct() {
     const response = await fetch(url, {
     });
     var result = await response.json();
+    console.log(result);
+    
     document.getElementById("detailnamepro").innerHTML = result.name
     document.getElementById("codepro").innerHTML = result.code
     document.getElementById("pricedetail").innerHTML = formatmoney(result.price)
@@ -184,8 +156,6 @@ async function loadAProduct() {
     result.frontCamera == null || result.frontCamera == ""? main += "":main+= `<span class="congnghect">Camera trước: <span class="chitietcongnghe">${result.frontCamera}</span></span>`
     result.backCamera == null || result.backCamera == ""? main += "":main+= `<span class="congnghect">Camera sau: <span class="chitietcongnghe">${result.backCamera}</span></span>`
     document.getElementById("thongtincauhinh").innerHTML = main;
-    listbonho = result.productStorages;
-    loadBoNho(result.category.categoryType)
 
 
     var main = `<div class="col-lg-2 col-md-2 col-sm-2 col-2 singdimg"><img onclick="clickImgdetail(this)" src="${result.imageBanner}" class="imgldetail"></div>`
@@ -195,83 +165,26 @@ async function loadAProduct() {
                 </div>`
     }
     document.getElementById("listimgdetail").innerHTML = main
-
-    result.category.categoryType == "DIEN_THOAI"?loadSanPhamLienQuan(result.tradeMark.id, null,id) : loadSanPhamLienQuan(null, result.category.id, id);
-}
-
-function loadBoNho(categoryType){
-    if(categoryType == "DIEN_THOAI"){
-        var main = '';
-        for(k=0; k<listbonho.length; k++){
-            var act =''
-            if(k==0){
-                act = 'activecolor'
-                loadMauSac(listbonho[k].id, null)
-            }
-            main += `<div class="col-lg-3 col-md-3 col-sm-6 col-6">
-            <div onclick="loadMauSac(${listbonho[k].id}, this)" class="storagediv ${act}">
-                <span class="">${listbonho[k].ram}-${listbonho[k].rom}</span>
-            </div>
-        </div>`
-        }
-        document.getElementById("listbonho").innerHTML = main;
-    }
-    if(categoryType == "PHU_KIEN"){
-        document.getElementById("storagedetaillable").style.display = "none";
-        var main = '';
-        for(i=0; i<listbonho.length; i++){
-            for(j=0; j<listbonho[i].productColors.length; j++){
-                var cls = 'hetsp';
-                var oncl = ``;
-                var mausac = listbonho[i].productColors[j];
-
-                if(mausac.quantity > 0){
-                    cls=''
-                    oncl = `onclick="chonMauSac(${mausac.id}, this, ${mausac.price})"`;
-                }
-                main += `<div class="col-lg-3 col-md-3 col-sm-6 col-6">
-                <div ${oncl} class="colorcdiv ${cls}">
-                    <img src="${mausac.image}" class="imgcolorpro"> <span class="storagedetail">${mausac.name}</span>
-                    <span class="pricestorage">${formatmoney(mausac.price)}</span>
-                </div>
-                </div>`
-            }
-        }
-        document.getElementById("listcolor").innerHTML = main;
-    }
-}
-
-
-async function loadMauSac(idbonho,e){
-    var url = 'http://localhost:8080/api/product-color/public/find-by-storage?id=' + idbonho;
-    const response = await fetch(url, {
-    });
-    var listmausac = await response.json();
-    console.log(listmausac);
-    var main = ''
-    for(j=0; j<listmausac.length; j++){
+    var main = '';
+    for (i = 0; i < result.productColors.length; i++) {
         var cls = 'hetsp';
         var oncl = ``;
-        if(listmausac[j].quantity > 0){
+        if(result.productColors[i].quantity > 0){
             cls=''
-            oncl = `onclick="chonMauSac(${listmausac[j].id}, this, ${listmausac[j].price})"`;
+            oncl = `onclick="chonMauSac(${result.productColors[i].id}, this, ${result.productColors[i].price})"`;
         }
         main += `<div class="col-lg-3 col-md-3 col-sm-6 col-6">
                 <div ${oncl} class="colorcdiv ${cls}">
-                    <img src="${listmausac[j].image}" class="imgcolorpro"> <span class="storagedetail">${listmausac[j].name}</span>
-                    <span class="pricestorage">${formatmoney(listmausac[j].price)}</span>
+                    <img src="${result.productColors[i].image}" class="imgcolorpro"> <span class="storagedetail">${result.productColors[i].name}</span>
+                    <span class="pricestorage">${formatmoney(result.productColors[i].price)}</span>
                 </div>
-            </div>`
+                </div>`
     }
-    document.getElementById("listcolor").innerHTML = main;
-    if(e != null){
-        var img = document.getElementsByClassName("storagediv");
-        for (k = 0; k < img.length; k++) {
-            document.getElementsByClassName("storagediv")[k].classList.remove('activecolor');
-        }
-        e.classList.add('activecolor')
-    }
+    document.getElementById("listcolor").innerHTML = main
+    loadSanPhamLienQuan(result.tradeMark.id, null,id);
 }
+
+
 
 function chonMauSac(idmausac, e, price){
     idColorCart = idmausac;
@@ -318,37 +231,40 @@ async function clickImgdetail(e) {
     document.getElementById("imgdetailpro").src = e.src
 }
 
-
-
-
-
-async function sanPhamByThuongHieuAndDanhMuc(page) {
-    var uls = new URL(document.URL)
-    var thuonghieu = uls.searchParams.get("thuonghieu");
-    var danhmuc = uls.searchParams.get("danhmuc");
-    var search = uls.searchParams.get("search");
+var sizesearch = 8;
+async function locSanPham(page) {
+    var min_price = document.getElementById("khoanggia").value.split("-")[0];
+    var max_price = document.getElementById("khoanggia").value.split("-")[1];
+    var sort = document.getElementById("sortpro").value;
+    const trademarkCheckboxes = document.querySelectorAll('input[name="trademarkIds"]:checked');
+    const trademarkIds = Array.from(trademarkCheckboxes).map(checkbox => checkbox.value);
+    const categoryCheckboxes = document.querySelectorAll('input[name="categoryIds"]:checked');
+    const categoryIds = Array.from(categoryCheckboxes).map(checkbox => checkbox.value);
     
-    var url = 'http://localhost:8080/api/product/public/loc-san-pham?page=' + page + '&size=' + size+'&sort=id,desc&small=0&large=1000000000';
-    if(thuonghieu != null){
-        url += '&trademark='+thuonghieu
-    }
-    if(danhmuc != null){
-        url += '&idcategory='+danhmuc
-    }
-    if(search != null){
-        url += '&search='+search
+    var url = 'http://localhost:8080/api/product/public/search-full?page=' + page + '&size=' + sizesearch+'&sort='+sort
+    var obj ={
+        "categoryIds":categoryIds,
+        "trademarkIds":trademarkIds,
+        "minPrice":min_price,
+        "maxPrice":max_price,
     }
     const response = await fetch(url, {
+        method: 'POST',
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        }),
+        body: JSON.stringify(obj)
     });
     var result = await response.json();
     var list = result.content;
+    var totalPage =  result.totalPages;
     var main = '';
     for (i = 0; i < list.length; i++) {
-        main += `<div class="col-lg-20p col-md-3 col-sm-6 col-6">
+        main += `<div class="col-lg-3 col-md-3 col-sm-6 col-6">
         <div class="singleproduct">
-            <a href="detail?id=${list[i].id}"><img src="${list[i].imageBanner}" class="productimg"></a>
+            <a href="detail.html?id=${list[i].id}"><img src="${list[i].imageBanner}" class="productimg"></a>
             <div class="contentsinglepro">
-                <p class="productname"><a class="productname" href="detail?id=${list[i].id}">${list[i].name}</a></p>
+                <p class="productname"><a class="productname" href="detail.html?id=${list[i].id}">${list[i].name}</a></p>
                 <div class="priceproduct">
                     <strong class="newprice">${formatmoney(list[i].price)}</strong>
                     <span class="oldprice">${list[i].oldPrice!=null && list[i].oldPrice > 0?formatmoney(list[i].oldPrice):''}</span>
@@ -357,47 +273,33 @@ async function sanPhamByThuongHieuAndDanhMuc(page) {
         </div>
     </div>`
     }
-    document.getElementById("sanphamloc").innerHTML += main
-    if(result.last == false){
-        document.getElementById("btnlocsanpham").onclick=function(){
-            sanPhamByThuongHieuAndDanhMuc(Number(page) + Number(1));
-        }
+    document.getElementById("sanphamloc").innerHTML = main
+    var mainpage = ''
+    for (i = 1; i <= totalPage; i++) {
+        mainpage += `<li onclick="locSanPham(${(Number(i) - 1)})" class="page-item pointer"><a class="page-link" class="pointer">${i}</a></li>`
     }
-    else{
-        document.getElementById("btnlocsanpham").onclick=function(){
-            toastr.warning("Đã hết kết quả tìm kiếm");
-        }
-    }
+    document.getElementById("pageable").innerHTML = mainpage
 }
 
 
-async function locSanPham(page) {
-    var search = document.getElementById("search").value
-    var thuonghieu = document.getElementById("thuonghieu").value
-    var danhmuc = document.getElementById("danhmuc").value
-    var mucgia = document.getElementById("mucgia").value
-    var sort = document.getElementById("sort").value
-    
-    var url = 'http://localhost:8080/api/product/public/loc-san-pham?page=' + page + '&size=' + size+'&sort='+sort+'&large='+mucgia.split("-")[1]+'&small='+mucgia.split("-")[0]+'&search='+search;
-
-    if(thuonghieu != null && thuonghieu != ""){
-        url += '&trademark='+thuonghieu
-    }
-    if(danhmuc != null && danhmuc != ""){
-        url += '&idcategory='+danhmuc
-    }
-    console.log(url);
+async function sanPhamByThuongHieu(page) {
+    var uls = new URL(document.URL)
+    var thuonghieu = uls.searchParams.get("thuonghieu");
+    var url = 'http://localhost:8080/api/product/public/san-pham-by-thuong-hieu?page='+page+'&size='+sizesearch+'&trademark='+thuonghieu;
     const response = await fetch(url, {
     });
     var result = await response.json();
+    console.log(result);
+    
     var list = result.content;
+    var totalPage =  result.totalPages;
     var main = '';
     for (i = 0; i < list.length; i++) {
-        main += `<div class="col-lg-20p col-md-3 col-sm-6 col-6">
+        main += `<div class="col-lg-3 col-md-3 col-sm-6 col-6">
         <div class="singleproduct">
-            <a href="detail?id=${list[i].id}"><img src="${list[i].imageBanner}" class="productimg"></a>
+            <a href="detail.html?id=${list[i].id}"><img src="${list[i].imageBanner}" class="productimg"></a>
             <div class="contentsinglepro">
-                <p class="productname"><a class="productname" href="detail?id=${list[i].id}">${list[i].name}</a></p>
+                <p class="productname"><a class="productname" href="detail.html?id=${list[i].id}">${list[i].name}</a></p>
                 <div class="priceproduct">
                     <strong class="newprice">${formatmoney(list[i].price)}</strong>
                     <span class="oldprice">${list[i].oldPrice!=null && list[i].oldPrice > 0?formatmoney(list[i].oldPrice):''}</span>
@@ -406,17 +308,12 @@ async function locSanPham(page) {
         </div>
     </div>`
     }
-    document.getElementById("sanphamloc").innerHTML += main
-    if(result.last == false){
-        document.getElementById("btnlocsanpham").onclick=function(){
-            sanPhamByThuongHieuAndDanhMuc(Number(page) + Number(1));
-        }
+    document.getElementById("sanphamloc").innerHTML = main
+    var mainpage = ''
+    for (i = 1; i <= totalPage; i++) {
+        mainpage += `<li onclick="sanPhamByThuongHieu(${(Number(i) - 1)})" class="page-item pointer"><a class="page-link" class="pointer">${i}</a></li>`
     }
-    else{
-        document.getElementById("btnlocsanpham").onclick=function(){
-            toastr.warning("Đã hết kết quả tìm kiếm");
-        }
-    }
+    document.getElementById("pageable").innerHTML = mainpage
 }
 
 
@@ -424,3 +321,4 @@ function locSpAction(){
     document.getElementById("sanphamloc").innerHTML = "";
     locSanPham(0);
 }
+

@@ -33,7 +33,7 @@ async function loadMenu() {
         `<div class="containercustom container">
             <nav class="navbar navbar-expand-lg">
                 <div class="container-fluid">
-                  <a class="navbar-brand tagaheadersdt" href="#"><img src="image/logo.png"><span class="sdtheader">0815.208.208 | 0818.215.215</span></a>
+                  <a class="navbar-brand tagaheadersdt" href="index.html"><img src="image/logo.png"><span class="sdtheader">0815.208.208 | 0818.215.215</span></a>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                   </button>
@@ -46,11 +46,10 @@ async function loadMenu() {
                     <div class="d-flex">
                         <div class="itemiconheader">
                             <div class="icon">
-                                <svg width="20px" height="20px" x="0px" y="0px" viewBox="0 0 513.64 513.64" style="enable-background:new 0 0 513.64 513.64;" xml:space="preserve"> 						<g> 							<g> 								<path d="M499.66,376.96l-71.68-71.68c-25.6-25.6-69.12-15.359-79.36,17.92c-7.68,23.041-33.28,35.841-56.32,30.72    c-51.2-12.8-120.32-79.36-133.12-133.12c-7.68-23.041,7.68-48.641,30.72-56.32c33.28-10.24,43.52-53.76,17.92-79.36l-71.68-71.68    c-20.48-17.92-51.2-17.92-69.12,0l-48.64,48.64c-48.64,51.2,5.12,186.88,125.44,307.2c120.32,120.32,256,176.641,307.2,125.44    l48.64-48.64C517.581,425.6,517.581,394.88,499.66,376.96z"></path> 							</g> 						</g> 						</svg>
+                            <svg width="20px" height="20px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"> <g fill="none" stroke="red" stroke-width="2"> <rect width="24" height="24" fill="white" rx="4"/> <path d="M3 3h18v18H3V3zm2 2v14h14V5H5zm2 2h10v2H7V7zm0 4h10v2H7v-2zm0 4h10v2H7v-2z" fill="currentColor"/> </g> </svg>
                             </div>
-                            <a href="tel:093243245" class="txtheader">
-                                <span class="text-sm">Bán hàng</span>
-                                <span class="text-bg">Online</span>
+                            <a href="baiviet.html" class="txtheader">
+                                <span class="text-bg">Bài viết</span>
                             </a>
                         </div>
                         <div class="itemiconheader">
@@ -78,8 +77,87 @@ async function loadMenu() {
             </nav>
         </div>`
     document.getElementById("menumain").innerHTML = menu
+    try {
+        loadFooter()
+    } catch (error) {
+        
+    }
 }
 
+function loadFooter(){
+    var footer = 
+    `<div class="containercustom container">
+            <div class="container-fluid">
+                <footer class="text-center text-lg-start text-muted container-footer">
+                    <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+                      <div class="me-5 d-none d-lg-block"><span>Theo dõi chúng tôi tại:</span></div>
+                      <div>
+                        <a href="" class="me-4 text-reset"><i class="fab fa-facebook-f"></i></a>
+                        <a href="" class="me-4 text-reset"><i class="fab fa-twitter"></i></a>
+                        <a href="" class="me-4 text-reset"><i class="fab fa-google"></i></a>
+                        <a href="" class="me-4 text-reset"><i class="fab fa-instagram"></i></a>
+                        <a href="" class="me-4 text-reset"><i class="fab fa-linkedin"></i></a>
+                        <a href="" class="me-4 text-reset"><i class="fab fa-github"></i></a>
+                      </div>
+                    </section>
+                    <section class="">
+                      <div class=" text-center text-md-start mt-5">
+                        <div class="row mt-3">
+                          <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                            <h6 class="text-uppercase fw-bold mb-4"><i class="fa fa-mobile" style="font-size: 25px;"></i> PhoneStore</h6>
+                            <p class="diachicuahang">
+                                <span>Cơ sở 1: </span>Số 215 Giáp Nhất, Nhân Chính, Thanh Xuân, Hà Nội
+                                Hotline: 0818.215.215
+                            </p>
+                            <p class="diachicuahang">
+                                <span>Cơ sở 2: </span>208 Xã Đàn, Đống Đa, Hà Nội
+                                Hotline: 0815.208.208
+                            </p>
+                            <p class="diachicuahang">
+                                <span>Cơ sở 3: </span>583 Lê Hồng Phong, Phường 10, Quận 10, tp Hồ Chí Minh
+                                Hotline: 0825.583.583
+                            </p>
+                          </div>
+                          <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                            <h6 class="text-uppercase fw-bold mb-4">Về chúng tôi</h6>
+                            <p><a href="#!" class="text-reset">Hotline: 09723748234</a></p>
+                            <p><a href="#!" class="text-reset">Email: phonestore@gmail.com</a></p>
+                            <p><a href="#!" class="text-reset">Địa chỉ cs1: Số 1, đại cồ việt, Hai Bà Trưng, Hà nội</a></p>
+                            <p><a href="#!" class="text-reset">Địa chỉ cs2: Số 1, đại cồ việt, Hai Bà Trưng, Hà nội</a></p>
+                          </div>
+                          <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                            <h6 class="text-uppercase fw-bold mb-4">Hỗ trợ khách hàng</h6>
+                            <p><a href="#!" class="text-reset">Uy tín</a></p>
+                            <p><a href="#!" class="text-reset">Chất lượng</a></p>
+                            <p><a href="#!" class="text-reset">Nguồn gốc rõ ràng</a></p>
+                            <p><a href="#!" class="text-reset">Giá rẻ</a></p>
+                          </div>
+                          <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                            <h6 class="text-uppercase fw-bold mb-4">Liên hệ</h6>
+                            <p><i class="fas fa-home me-3"></i> Hà nội, Việt Nam</p>
+                            <p><i class="fas fa-envelope me-3"></i> shop@gmail.com</p>
+                            <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
+                            <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                </footer>
+            </div>
+        </div>
+`
+    document.getElementById("footer").innerHTML = footer
+}
+
+
+
+function formatmoney(money) {
+    const VND = new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+    });
+    return VND.format(money);
+}
 
 async function logout() {
     localStorage.removeItem("token");
